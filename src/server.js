@@ -47,11 +47,14 @@ app.use(express.static(path.join(__dirname, "../public")));
 // method override
 app.use(methodOverride("_method"));
 
+app.set("trust proxy", 1); 
+
 // session
 app.use(session({
   secret: env.SESSION_SECRET || "dev_secret_change_me",
   resave: false,
   saveUninitialized: false,
+  proxy: true,
   cookie: {
     httpOnly: true,
     secure: env.NODE_ENV === "production",

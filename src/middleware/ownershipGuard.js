@@ -1,8 +1,5 @@
 const postService = require("../services/postService");
 
-/**
- * Ensures logged-in user owns the post
- */
 exports.ownershipGuard = async (req, res, next) => {
   try {
     const userId = req.session?.user?.id;
@@ -10,6 +7,14 @@ exports.ownershipGuard = async (req, res, next) => {
 
     if (!userId) {
       return res.redirect("/login");
+    }
+
+    const post = await postService.getPostById(postId);
+
+    if (!post) {
+      return res.status(404).render("error", {
+        message: "Post not found",
+      });
     }
 
     const isOwner = await postService.isOwner(postId, userId);

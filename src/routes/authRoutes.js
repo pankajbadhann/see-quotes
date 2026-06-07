@@ -1,30 +1,25 @@
 const express = require("express");
 const router = express.Router();
 
+
 const authController = require("../controllers/authController");
+const rateLimit = require("express-rate-limit");
 
-const {
-  validateRegister,
-  validateLogin,
-} = require("../validations/authValidation");
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: "Too many login attempts, try again later",
+});
 
-// REGISTER
-router.get("/register", authController.showRegister);
-
-router.post(
-  "/register",
-  validateRegister,
-  authController.registerUser
-);
+const { validateRegister, validateLogin, } = require("../validations/authValidation");
 
 // LOGIN
 router.get("/login", authController.showLogin);
+router.post("/login", authLimiter, validateLogin, authController.loginUser);
 
-router.post(
-  "/login",
-  validateLogin,
-  authController.loginUser
-);
+// REGISTER
+router.get("/register", authController.showRegister);
+router.post("/register", authLimiter, validateRegister, authController.registerUser);
 
 // LOGOUT
 router.get("/logout", authController.logoutUser);

@@ -43,17 +43,18 @@ exports.loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
+    // Always fetch user
     const user = await User.findOne({ email }).select("+password");
 
-    if (!user) {
-      const error = new Error("Invalid credentials");
-      error.statusCode = 401;
-      throw error;
-    }
+    // Fake user for timing safety
+    const fakeHash =
+      "$2b$12$KIXQe8Y8fGxZ8QzQq1fakehashforsecuritydemo1234567890";
 
-    const isMatch = await user.comparePassword(password);
+    const passwordToCheck = user ? user.password : fakeHash;
 
-    if (!isMatch) {
+    const isMatch = await bcrypt.compare(password, passwordToCheck);
+
+    if (!user || !isMatch) {
       const error = new Error("Invalid credentials");
       error.statusCode = 401;
       throw error;

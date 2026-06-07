@@ -99,6 +99,7 @@ exports.update = async (req, res, next) => {
     const updated = await postService.updatePost({
       id: req.params.id,
       content,
+      userId: req.session.user.id,
     });
 
     if (!updated) {
@@ -118,7 +119,7 @@ exports.update = async (req, res, next) => {
  */
 exports.destroy = async (req, res, next) => {
   try {
-    const deleted = await postService.deletePost(req.params.id);
+    const deleted = await postService.deletePost(req.params.id, req.session.user.id);
 
     if (!deleted) {
       const error = new Error("Post not found");

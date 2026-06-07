@@ -14,6 +14,7 @@
   --radius-md: 15px;
 
   --transition: 0.2s ease;
+  --font: "Macondo", cursive;
 }
 
 /* reset ------------------------------------*/
@@ -21,7 +22,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Times New Roman", Times, serif;
 }
 
 /* base ------------------------------------*/
@@ -32,6 +32,7 @@ body {
   color: var(--text);
   user-select: none;
   font-size: clamp(.7rem, 1.6vw, 4rem);
+  font-family: var(--font);
 }
 
 footer, header{
@@ -64,6 +65,7 @@ a {
 
 a:hover {
   font-weight: 600;
+  color: var(--primary);
   transform: scale(1.02);
 }
 
@@ -74,10 +76,12 @@ button {
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: var(--transition);
+  font-family: var(--font);
 }
 
 button:hover {
   transform: scale(1.02);
+  color: var(--primary);
 }
 
 /* inputs ------------------------------------*/
@@ -89,6 +93,7 @@ textarea {
   border-radius: var(--radius-sm);
   width: 100%;
   outline: none;
+  font-family: var(--font);
 }
 
 /* post card ------------------------------------*/

@@ -4,10 +4,10 @@ const Post = require("../models/Post");
  * Get all posts (latest first)
  */
 exports.getAllPosts = async () => {
-  return await Post.find()
-    .populate("author", "username email")
+  return await Post.find({}, "content author createdAt")
+    .populate("author", "username")
     .sort({ createdAt: -1 })
-    .lean(); // performance boost
+    .lean();
 };
 
 /**
@@ -16,11 +16,9 @@ exports.getAllPosts = async () => {
 exports.getPostById = async (id) => {
   if (!id) throw new Error("Post ID is required");
 
-  const post = await Post.findById(id)
-    .populate("author", "username email")
+  return await Post.findById(id, "content author createdAt")
+    .populate("author", "username")
     .lean();
-
-  return post;
 };
 
 /**
@@ -42,30 +40,30 @@ exports.createPost = async ({ content, userId }) => {
 /**
  * Update post (with safety check)
  */
-exports.updatePost = async ({ id, content }) => {
-  if (!id || !content) {
+exports.updatePost = async ({ id, content, userId }) => {
+  if (!id || !content || !userId) {
     throw new Error("Invalid update data");
   }
 
-  const updated = await Post.findByIdAndUpdate(
-    id,
+  const post = await Post.findOneAndUpdate(
+    { _id: id, author: userId },
     { content: content.trim() },
-    {
-      new: true,
-      runValidators: true,
-    }
+    { new: true, runValidators: true }
   );
 
-  return updated;
+  return post;
 };
 
 /**
  * Delete post
  */
-exports.deletePost = async (id) => {
-  if (!id) throw new Error("Post ID is required");
+exports.deletePost = async (id, userId) => {
+  if (!id || !userId) throw new Error("Post ID required");
 
-  return await Post.findByIdAndDelete(id);
+  return await Post.findOneAndDelete({
+    _id: id,
+    author: userId,
+  });
 };
 
 /**

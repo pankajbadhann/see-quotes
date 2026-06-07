@@ -7,7 +7,7 @@ const session = require("express-session");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const csrf = require("csurf");
-
+const csrfProtection = csrf();
 const connectDB = require("./config/db");
 const env = require("./config/env");
 
@@ -48,27 +48,31 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.use(methodOverride("_method"));
 
 // session
-app.use(
-  session({
-    secret: env.SESSION_SECRET || "dev_secret_change_me",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
-    },
-  })
-);
+app.use(session({
+  secret: env.SESSION_SECRET || "dev_secret_change_me",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 1000 * 60 * 60 * 24,
+  },
+}));
 
-// csrf protection - applied after session
-const csrfProtection = csrf();
-
-// Apply only to non-API routes if needed (recommended)
+// CSRF AFTER session ONLY
 app.use(csrfProtection);
 
-// attach user - depends on session
+// attach user AFTER csrf safely
+app.use((req, res, next) => {
+  try {
+    res.locals.csrfToken = req.csrfToken();
+  } catch (e) {
+    res.locals.csrfToken = null;
+  }
+  next();
+});
+
 app.use(attachUser);
 
 // routes

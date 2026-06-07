@@ -1,20 +1,127 @@
-<%- include("../layouts/header.ejs"); %>
-  <h1>Quora Posts</h1>
-  <button id="add" class="btn"><a href="http://localhost:3000/posts/new">Add new One</button>
-  <% for(let post of posts){ %>
-    <div class="box">
-      <p><a href="http://localhost:3000/posts/<%= post.id %>"><%= post.username %></a></p>
-      <div class="alignR">
-        <span><a href="http://localhost:3000/posts/<%= post.id %>/edit">edit</a></span>
-        <span> &nbsp; | &nbsp;</span>
-        <span>
-          <form method="post" action="/posts/<%= post.id %>?_method=DELETE" class="inline">
-            <button id="dele">delete</button>
-          </form>
-        </span>
-      </div>
-      <p class="post"> <%= post.content %></p>
-    </div>
+<%- include("../layouts/header") %>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+  <h1 style="margin:0;">All Posts</h1>
+
+  <% if (user) { %>
+    <a
+      href="/posts/new"
+      class="btn"
+      style="
+        background: var(--card);
+        border-radius: 10px;
+        font-weight: 600;
+      "
+    >
+      + New Post
+    </a>
   <% } %>
-</body>
-</html>
+</div>
+
+<% if (!posts.length) { %>
+
+  <div
+    style="
+      background:white;
+      padding:40px;
+      border-radius:15px;
+      text-align:center;
+      box-shadow:var(--shadow);
+    "
+  >
+    <h2>No posts yet</h2>
+
+    <p style="margin-top:10px;color:#666;">
+      Be the first person to share a quote.
+    </p>
+
+    <% if (user) { %>
+      <a
+        href="/posts/new"
+        class="btn"
+        style="margin-top:20px;"
+      >
+        Create First Post
+      </a>
+    <% } %>
+  </div>
+
+<% } %>
+
+<% posts.forEach(post => { %>
+
+  <div class="box">
+
+    <p
+      style="
+        font-size:18px;
+        line-height:1.7;
+        margin-bottom:15px;
+      "
+    >
+      <%= post.content %>
+    </p>
+
+    <div
+      style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        flex-wrap:wrap;
+        gap:10px;
+      "
+    >
+      <small style="color:#666;">
+        Posted by
+        <strong>
+          <%= post.author?.username %>
+        </strong>
+      </small>
+
+      <div>
+
+        <a
+          href="/posts/<%= post._id %>"
+          class="btn"
+        >
+          View
+        </a>
+
+        <% if (
+          user &&
+          post.author &&
+          post.author._id.toString() === user.id
+        ) { %>
+
+          <a
+            href="/posts/<%= post._id %>/edit"
+            class="btn"
+          >
+            Edit
+          </a>
+
+          <form
+            action="/posts/<%= post._id %>?_method=DELETE"
+            method="POST"
+            style="display:inline;"
+          >
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button
+              type="submit"
+              class="btn"
+              onclick="return confirm('Delete this post?')"
+            >
+              Delete
+            </button>
+          </form>
+
+        <% } %>
+
+      </div>
+    </div>
+
+  </div>
+
+<% }) %>
+
+<%- include("../layouts/footer") %>

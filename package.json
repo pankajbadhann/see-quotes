@@ -1,19 +1,27 @@
 {
-  "name": "restfulapi-s",
+  "name": "see-quotes",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A social quote sharing platform",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
   },
-  "keywords": [],
   "author": "Pankaj Badhan",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "csurf": "^1.11.0",
+    "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "express-rate-limit": "^8.5.2",
+    "express-session": "^1.19.0",
+    "helmet": "^8.2.0",
     "method-override": "^3.0.0",
-    "mongoose": "^9.6.3",
-    "package": "^1.0.1"
+    "mongoose": "^9.6.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }

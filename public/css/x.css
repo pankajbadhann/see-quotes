@@ -1,0 +1,259 @@
+/* =========================
+   MODERN DESIGN SYSTEM
+========================= */
+
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+
+  --border: #e5e7eb;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+
+  --transition: 0.2s ease;
+}
+body.dark {
+  --bg: #0f172a;
+  --surface: #111827;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+
+  --border: #1f2937;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================
+   RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+h1, h2, h3 {
+  color: var(--text);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+p {
+  color: var(--text);
+}
+
+/* =========================
+   LINKS
+========================= */
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+button, .btn {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 500;
+}
+
+button:hover, .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+/* primary button */
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+/* =========================
+   INPUTS
+========================= */
+input, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  outline: none;
+  transition: var(--transition);
+}
+
+input:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+/* =========================
+   LAYOUT CONTAINERS
+========================= */
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* =========================
+   CARDS (POSTS)
+========================= */
+.box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 18px;
+  margin: 16px 0;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.box:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================
+   HEADER
+========================= */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h2 a {
+  color: var(--text);
+  font-weight: 800;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+  background: var(--surface);
+}
+
+/* =========================
+   UTILITIES
+========================= */
+.alignR { text-align: right; }
+.inline { display: inline; }
+
+.span {
+  background: #f3f4f6;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* =========================
+   FLOAT BUTTON
+========================= */
+#add {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+}
+
+/* =========================
+   MICRO UX POLISH
+========================= */
+
+/* smoother interactions globally */
+* {
+  scroll-behavior: smooth;
+}
+
+/* button micro-interaction */
+.btn, button {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn:active, button:active {
+  transform: scale(0.98);
+}
+
+/* subtle hover lift only for cards */
+.box {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* softer hover feel (no aggressive jump) */
+.box:hover {
+  transform: translateY(-3px);
+}
+
+/* better empty state feel */
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: var(--muted);
+}
+
+/* input focus refinement */
+input:focus, textarea:focus {
+  outline: none;
+}
+
+/* link hover refinement */
+a {
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+a:hover {
+  opacity: 0.85;
+}

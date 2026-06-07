@@ -1,0 +1,56 @@
+<%- include("layouts/header") %>
+
+<div style="
+  text-align:center;
+  margin-top:50px;
+">
+
+  <h1 style="margin-bottom:20px;">Welcome to See Quotes</h1>
+
+  <p style="margin-bottom:30px; color:gray;">
+    Share your thoughts, read posts, and connect with others.
+  </p>
+
+  <div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
+
+    <a href="/posts" class="btn" style="
+      padding:10px 15px;
+      background:blanchedalmond;
+      border-radius:10px;
+    ">
+      Explore Posts
+    </a>
+    <% if (!user) { %>
+
+      <a href="/login" class="btn" style="
+      padding:10px 15px;
+      background:blanchedalmond;
+      border-radius:10px;
+    ">
+        Login
+      </a>
+
+      <a href="/register" class="btn" style="
+      padding:10px 15px;
+      background:blanchedalmond;
+      border-radius:10px;
+    ">
+        Register
+      </a>
+
+    <% } else { %>
+
+      <a href="/posts/new" class="btn" style="
+      padding:10px 15px;
+      background:blanchedalmond;
+      border-radius:10px;
+    ">
+        Create Post
+      </a>
+
+    <% } %>
+  </div>
+
+</div>
+
+<%- include("layouts/footer") %>

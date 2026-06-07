@@ -3,8 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>coder.lp</title>
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="/style.css">
-  <script type="module" src="/app.js"></script>
+  <title>See Quotes</title>
+
+  <link rel="stylesheet" href="/css/style.css">
 </head>
+<body>
+
+<header style="padding: 15px; background: blanchedalmond; display:flex; justify-content:space-between; align-items:center;">
+  <h2><a href="/" class="logo" style="text-decoration:none;">See Quotes</a></h2>
+
+  <nav>
+    <a href="/posts">Posts</a>
+
+    <% if (typeof user !== 'undefined' && user) { %>
+      <span style="margin-left:10px;">Hi, <%= user.username %></span>
+      <a href="/logout" style="margin-left:10px;">Logout</a>
+    <% } else { %>
+      <a href="/login" style="margin-left:10px;">Login</a>
+      <a href="/register" style="margin-left:10px;">Register</a>
+    <% } %>
+  </nav>
+</header>
+
+<main style="padding:20px;">

@@ -1,10 +1,91 @@
-<%- include("../layouts/header.ejs"); %>
-  <h1>Here is your post in detail</h1>
-  <button id="add" class="user btn"><a href="http://localhost:3000/posts">Home</a></button>
-  <p>Post id: <%= post.id %></p>
-  <div class="post box">
-    <h3><%= post.username %></h3>
-    <h3><%= post.content %></h3>
+<%- include("../layouts/header") %>
+
+<div
+  style="
+    max-width:800px;
+    margin:0 auto;
+  "
+>
+
+  <div
+    style="
+      background:white;
+      padding:30px;
+      border-radius:15px;
+      box-shadow:var(--shadow);
+    "
+  >
+
+    <h1 style="margin-bottom:25px;">Post</h1>
+
+    <p
+      style="
+        font-size:20px;
+        line-height:1.8;
+        margin-bottom:25px;
+        white-space:pre-wrap;
+      "
+    >
+      <%= post.content %>
+    </p>
+
+    <div
+      style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        flex-wrap:wrap;
+        gap:10px;
+        border-top:1px solid #eee;
+        padding-top:15px;
+      "
+    >
+      <div style="color:#666;">
+        Author:
+        <strong>
+          <%= post.author?.username %>
+        </strong>
+      </div>
+
+      <div>
+        <a href="/posts" class="btn">
+          ← Back
+        </a>
+
+        <% if (
+          user &&
+          post.author &&
+          post.author._id.toString() === user.id
+        ) { %>
+
+          <a
+            href="/posts/<%= post._id %>/edit"
+            class="btn"
+          >
+            Edit
+          </a>
+
+          <form
+            action="/posts/<%= post._id %>?_method=DELETE"
+            method="POST"
+            style="display:inline;"
+          >
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button
+              class="btn"
+              onclick="return confirm('Delete this post?')"
+            >
+              Delete
+            </button>
+          </form>
+
+        <% } %>
+
+      </div>
+    </div>
+
   </div>
-</body>
-</html>
+
+</div>
+
+<%- include("../layouts/footer") %>

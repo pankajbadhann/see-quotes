@@ -1,14 +1,60 @@
-<%- include("../layouts/header.ejs"); %>
-<body>
-  <h1>Edit Your Post</h1>
-  <button id="add" class="user btn"><a href="http://localhost:3000/posts">Home</a></button>
-  <form method="post" action="/posts/<%=post.id%>?_method=PATCH" class="newForm">
-    <p>
-      <span class="span">id: <%= post.id %></span>
-      <span class="span">username: <%= post.username %></span>
-    </p><br>
-    <textarea name="content" cols="50" rows="10"><%=post.content%></textarea><br>
-    <button class="btn">Submit</button>
-  </form>
-</body>
-</html>
+<%- include("../layouts/header") %>
+
+<div
+  style="
+    max-width:700px;
+    margin:0 auto;
+  "
+>
+  <h1>Edit Post</h1>
+
+  <div
+    style="
+      background:white;
+      padding:25px;
+      border-radius:15px;
+      box-shadow:var(--shadow);
+    "
+  >
+    <form
+      action="/posts/<%= post._id %>?_method=PATCH"
+      method="POST"
+    >
+<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <textarea
+        name="content"
+        required
+        maxlength="500"
+        style="
+          min-height:180px;
+          resize:vertical;
+        "
+      ><%= post.content %></textarea>
+
+      <div
+        style="
+          margin-top:20px;
+          display:flex;
+          gap:10px;
+        "
+      >
+        <button
+          type="submit"
+          class="btn"
+        >
+          Update Post
+        </button>
+
+        <a
+          href="/posts"
+          class="btn"
+        >
+          Cancel
+        </a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<%- include("../layouts/footer") %>
